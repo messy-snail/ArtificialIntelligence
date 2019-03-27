@@ -1,8 +1,8 @@
-##Artificial Intelligence (2019 Spring)
+# Artificial Intelligence (2019 Spring)
 
 대학원 강의인 인공지능응용 강의의 소스 코드를 정리합니다. 개인적인 정리 자료로 주석은 다소 상세하지 않을 수 있습니다. 
 
-### Homework 0
+## Homework 0
 1. 1에서 100까지를더하는프로그램 (for 또는while loop 사용)  
 2. 다음과같이 tuple을 element로갖는 list가 주어진 경우 tuple 인수값의 합이 증가하는대로 list의 element의 순서를 재배치 하는 프로그램 작성
 sample list : [ (2,5), (1,2), (4,4), (2,3), (2,1) ]  
@@ -18,8 +18,8 @@ sample2: { apple: 20, banana: 15, pear: 20, grape: 40 }
 **Result**
 
 
-### Homework 1
-#### House Price Data 
+## Homework 1
+### House Price Data 
 - data is a (506,14) array, and the number of data is 506 Each column in data (X1, X2, …, X13) are features. X14 is the house price (label)
 - Training data is the first 400 data 
 - Testing data is the remaining data 
