@@ -16,6 +16,22 @@ sample2: { apple: 20, banana: 15, pear: 20, grape: 40 }
 
 ---
 **Result**
+1) 1에서 100까지 합 :  5050
+2) sample list :  [(2, 5), (1, 2), (4, 4), (2, 3), (2, 1)]  
+result :  [(1, 2), (2, 1), (2, 3), (2, 5), (4, 4)]  
+3) 5배수와 6배수 :  [5, 6, 10, 12, 15, 18, 20, 24, 25, 30, 35, 36, 40, 42, 45, 48, 50, 54, 55, 60, 65, 66, 70, 72, 75, 78, 80, 84, 85, 90, 95, 96]  
+합 결과 :  1586
+4) [병합 전]  
+{'kiwi': 30, 'apple': 20, 'pineapple': 50}  
+{'apple': 20, 'banana': 15, 'pear': 20, 'grape': 40}  
+[병합 후]  
+{'kiwi': 30, 'apple': 20, 'pineapple': 50, 'banana': 15, 'pear': 20, 'grape': 40}  
+5) [사용자 정의 함수]  
+sum of a :  15  
+sum of b :  30  
+[자체 함수]  
+sum of a :  15  
+sum of b :  30  
 
 
 ## Homework 1
@@ -27,6 +43,10 @@ sample2: { apple: 20, banana: 15, pear: 20, grape: 40 }
 
 1) Stochastic gradient update implementation (using for loops)
 2) Batch(Vectorized) gradient update implementation (without for loops)
+
+---
+**Source Code**
+
 
 ---
 **Result**
