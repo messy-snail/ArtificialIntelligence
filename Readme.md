@@ -113,11 +113,12 @@ for k in range(2000):
   * Regression 결과(Training)   
 ![Figure_2](https://user-images.githubusercontent.com/38720524/55375241-6d387900-5546-11e9-8340-ab88ddbc9da7.png)
 
-* BGD 결과  
+* 처리시간 비교  
   * 실험한 PC 환경은 i5-6600 CPU @ 3.30GHz, Ram 8.00GB이며, 두 코드 간의 소요시간을 비교하면 아래와 같다. 소요시간 차이는 약 48.311배가 발생하며, 이는 for문과 벡터 연산에서 발생하는 속도 차이다.
-  * 관련 코드는 time 모듈을 이용하여 구현하였다.      
+  * 관련 코드는 time 모듈을 이용하여 구현하였다.  
+          
 |SGD|BGD|
-|:--------:|:-------:|
+|:---:|:---:|
 |18.020 sec|0.373 sec|
 
 ## Homework 2
@@ -135,4 +136,148 @@ for 루프를 이용한 구현에서는 총 두 가지 방법으로 구현되었
 ---
 #### **Source Code**  
 **1. SGD - 화소 단위**    
-for문을 돌면서 웨이트를 업데이트함. batch와 달리 매번 업데이트를 수행함.
+이중 for문을 돌면서 웨이트를 업데이트함. 화소 단위로 매번 업데이트를 수행함. 그림 단위로 해석하는 것이 아니기에 학습률이 좋지 않을 것으로 예상함.  
+~~소요시간이 너무 많이 걸려 실제 실행해보지는 못함.~~
+```python
+for k in range(10):  # 100 is the number of epoch
+    cost1=0
+    cost2=0
+    for i in range(m_tr):
+        for j in range(n):
+            hypothesis = sigmoid(trImg[i,j]*theta[j])
+            grad = trImg[i,j]*(hypothesis-trLb[i])
+            theta = theta-alpha*grad
+            # train cost 계산
+            cost1 = cost1 + sum((sigmoid(trImg[i, :] * theta) - trLb[i]) ** 2)
+        # test cost 계산
+        for i in range(m_te):
+            cost2 = cost2 + sum((sigmoid(teImg[i, :] * theta) - teLb[i]) ** 2)
+
+    if k % 1 == 0:
+         trainLoss.append(cost1/(m_tr*n))
+         testLoss.append(cost2/(m_te*n))
+         print(k, cost1/(m_tr*n), cost2/(m_te*n))
+```
+
+**2. SGD - 그림 단위**    
+for문을 돌면서 웨이트를 업데이트함. 그림 단위(28x28)로 매번 업데이트를 수행함. 이전과 달리 하나의 for를 이용하여 weight를 업데이트함.    
+
+```python
+for k in range(400):  # 100 is the number of epoch
+    cost1=0
+    cost2=0
+    for i in range(m_tr):
+        #의미 단위로 계산.(하나의 데이터에 대해서)
+        hypothesis = sigmoid(trImg[i,:]*theta)
+        grad = trImg[i,:]*(hypothesis-trLb[i])
+        theta = theta-alpha*grad
+        #train cost 계산
+        cost1 = cost1 + sum((sigmoid(trImg[i, :] * theta) - trLb[i]) ** 2)
+    # test cost 계산
+    for i in range(m_te):
+        cost2 = cost2 + sum((sigmoid(teImg[i, :] * theta) - teLb[i]) ** 2)
+
+    if k % 5 == 0:
+         trainLoss.append(cost1/(m_tr*n))
+         testLoss.append(cost2/(m_te*n))
+         print(k, cost1/(m_tr*n), cost2/(m_te*n))
+```
+
+**3. BGD**    
+for문이 아닌 벡터로 연산을 수행함. Full batch 단위로 weight를 업데이트함.      
+
+```python
+for k in range(400):  # 100 is the number of epoch
+    ''' 
+    hypothesis = sigmoid(np.matmul(trImg.T, theta))
+    grad = np.matmul(trImg, hypothesis-trLb)
+    theta = theta-np.dot(alpha, grad)
+
+    if k % 5 == 0:
+        #MSE 관점.
+         cost1 = sum((sigmoid(np.matmul(trImg.T, theta))-trLb)**2)
+         cost2 = sum((sigmoid(np.matmul(teImg.T, theta))-teLb)**2)
+
+         trainLoss.append(cost1/m_tr)
+         testLoss.append(cost2/m_te)
+         print(k, cost1 / m_tr, cost2 / m_te)
+```
+
+---
+**3. Result**  
+* SGD 결과(화소 단위)  
+  * 너무 느려서 따로 결과를 확인하지 못함.
+  
+* SGD 결과(그림 단위)
+  * Loss 곡선      
+![mini](https://user-images.githubusercontent.com/38720524/55388003-6f61fe00-556d-11e9-8580-94d494b103d7.png)
+
+  * **Accuracy : 0.9839243498817967**
+
+* BGD 결과  
+  * Loss 곡선  
+![Figure_1](https://user-images.githubusercontent.com/38720524/55388045-80127400-556d-11e9-85c4-bb6321e13307.png)
+
+  * **Accuracy : 0.9995271867612293**
+
+## Homework 3
+### MNIST Sotfmax classification(0 to 9) 
+- Hand written image data(28x28)
+- Classification of 0 ,1, …, 9 (10 Class)
+- Softmax Regression algorithm
+
+1) Batch(Vectorized) gradient update implementation (without for loops)
+
+---
+#### **Source Code**  
+**1. BGD**    
+* TBD  
+```python
+#기존 레이블을 One hot encoding으로 표현.
+trTarget = np.zeros((K,m_tr)) # Train Target
+for i in range(m_tr):
+    trTarget[trLb[i]][i] = 1.
+teTarget = np.zeros((K,m_te)) # Test Target
+for i in range(m_te):
+    teTarget[teLb[i]][i] = 1.   
+```  
+* TBD  
+```python
+k in range(200):
+    hypothesis = soft(theta, trImg)
+
+    grad = -np.matmul(trImg, (trTarget-hypothesis).T)
+    theta = theta-alpha*grad
+
+    if k % 5 == 0:
+         #MSE 관점
+         cost1=np.sum((trTarget-soft(theta, trImg))**2)
+         cost2 = np.sum((teTarget - soft(theta, teImg)) ** 2)
+         trainLoss.append(cost1/m_tr)
+         testLoss.append(cost2/m_te)
+         print(k, cost1/m_tr, cost2/m_te)
+
+plt.plot(trainLoss, label='Train loss')
+plt.plot(testLoss, label='Test loss')
+plt.legend(loc='upper right')
+plt.show()
+correct =  sum(np.argmax(soft(theta, teImg), axis=0) ==  teLb)
+print(correct / m_te)
+
+print('-----Learning Finished-----')
+```  
+* TBD  
+```python
+#성능 테스트를 위해 랜덤한 입력 대비 예측값 비교.
+for i in range(10):
+    idx = np.random.randint(0, len(teImg[0]))
+    print('Ground Truth = ',teLb[idx])
+    prediction = np.argmax(soft(theta, teImg[:,idx]))
+    print('Prediction = ', prediction)
+```  
+
+---
+**3. Result**  
+* BGD 결과 
+  * Loss 곡선      
+  * 실제 prediction 결과 (random 10개)
