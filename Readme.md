@@ -5,8 +5,8 @@
 ## Homework list  
 * 파이썬 기초 : [HW#0](#homework-0)
 * Linear Regression : [HW#1](#homework-1)
-* Logistirc Regression(Classification) : [HW#1](#homework-2)
-* Softmax Regression(Classification) : [HW#1](#homework-3)
+* Logistirc Regression(Classification) : [HW#2](#homework-2)
+* Softmax Regression(Classification) : [HW#3](#homework-3)
 
 ## Homework 0
 1. 1에서 100까지를더하는프로그램 (for 또는while loop 사용)  
@@ -39,7 +39,6 @@ sum of b :  30
 sum of a :  15  
 sum of b :  30  
 
-
 ## Homework 1
 ### House Price Data 
 - data is a (506,14) array, and the number of data is 506 Each column in data (X1, X2, …, X13) are features. X14 is the house price (label)
@@ -49,12 +48,7 @@ sum of b :  30
 
 1) Stochastic gradient update implementation (using for loops)
 2) Batch(Vectorized) gradient update implementation (without for loops)  
-
-$\frac{1}{3}$  
-
-\\( x(t)=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \\)  
-
-$$ \frac{\partial J(\theta)}{\partial \theta_j} = \sum_i x^{(i)}_j \left(h_\theta(x^{(i)}) - y^{(i)}\right) $$  
+  
 ---
 #### **Source Code**  
 **1. SGD**    
@@ -242,7 +236,7 @@ for k in range(400):  # 100 is the number of epoch
 ---
 #### **Source Code**  
 **1. BGD**    
-* TBD  
+* 기존 레이블을 One hot encoding으로 표현함.  
 ```python
 #기존 레이블을 One hot encoding으로 표현.
 trTarget = np.zeros((K,m_tr)) # Train Target
@@ -252,7 +246,7 @@ teTarget = np.zeros((K,m_te)) # Test Target
 for i in range(m_te):
     teTarget[teLb[i]][i] = 1.   
 ```  
-* TBD  
+* Full batch 단위로 연산 후 업데이트   
 ```python
 k in range(200):
     hypothesis = soft(theta, trImg)
@@ -277,7 +271,7 @@ print(correct / m_te)
 
 print('-----Learning Finished-----')
 ```  
-* TBD  
+* 성능 테스트를 위해 랜덤으로 10개의 이미지에 대해 예측을 수행함.
 ```python
 #성능 테스트를 위해 랜덤한 입력 대비 예측값 비교.
 for i in range(10):
@@ -290,5 +284,7 @@ for i in range(10):
 ---
 **3. Result**  
 * BGD 결과 
-  * Loss 곡선      
-  * 실제 prediction 결과 (random 10개)
+  * Loss 곡선   
+![Figure_1](https://user-images.githubusercontent.com/38720524/55395854-71cc5400-557d-11e9-9681-4be51efe1c74.png)
+  * 실제 prediction 결과 (random 10개)  
+ ![캡처](https://user-images.githubusercontent.com/38720524/55395860-74c74480-557d-11e9-960b-9844ff5c9c08.PNG)
