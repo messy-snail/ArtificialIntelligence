@@ -2,6 +2,12 @@
 
 대학원 강의인 인공지능응용 강의의 소스 코드를 정리합니다. 개인적인 정리 자료로 주석은 다소 상세하지 않을 수 있습니다. 
 
+## Homework list  
+* 파이썬 기초 : [HW#0](#homework-0)
+* Linear Regression : [HW#1](#homework-1)
+* Logistirc Regression(Classification) : [HW#1](#homework-2)
+* Softmax Regression(Classification) : [HW#1](#homework-3)
+
 ## Homework 0
 1. 1에서 100까지를더하는프로그램 (for 또는while loop 사용)  
 2. 다음과같이 tuple을 element로갖는 list가 주어진 경우 tuple 인수값의 합이 증가하는대로 list의 element의 순서를 재배치 하는 프로그램 작성
@@ -42,8 +48,13 @@ sum of b :  30
 - Coding two sample codes (missing part coding) Programming 1), 2)   
 
 1) Stochastic gradient update implementation (using for loops)
-2) Batch(Vectorized) gradient update implementation (without for loops)
+2) Batch(Vectorized) gradient update implementation (without for loops)  
 
+$\frac{1}{3}$  
+
+\\( x(t)=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \\)  
+
+$$ \frac{\partial J(\theta)}{\partial \theta_j} = \sum_i x^{(i)}_j \left(h_\theta(x^{(i)}) - y^{(i)}\right) $$  
 ---
 #### **Source Code**  
 **1. SGD**    
