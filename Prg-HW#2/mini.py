@@ -8,7 +8,6 @@ Created on Tue Feb 27 09:10:58 2018
 import numpy as np
 import mni
 import matplotlib.pyplot as plt
-import time
 #시그모이드 함수 정의
 def sigmoid(x):
   return 1 / (1 + np.exp(-x))
@@ -52,51 +51,49 @@ testLoss=[]
 trImg = np.asarray(trImg)
 teImg = np.asarray(teImg)
 #grad=[]
-# for k in range(10):  # 100 is the number of epoch
-#     '''
-#     your codes here  (stochastic update of parameters)
-#                    '''
-#     cost1=0
-#     cost2=0
-#     for i in range(m_tr):
-#         for j in range(n):
-#             hypothesis = sigmoid(trImg[i,j]*theta[j])
-#             grad = trImg[i,j]*(hypothesis-trLb[i])
-#             theta = theta-alpha*grad
-#             #train cost 계산
-#             cost1 = cost1 + sum((sigmoid(trImg[i, :] * theta) - trLb[i]) ** 2)
-#         # test cost 계산
-#         # for i in range(m_te):
-#         #     cost2 = cost2 + sum((sigmoid(teImg[i, :] * theta) - teLb[i]) ** 2)
-#
-#     if k % 1 == 0:
-#          trainLoss.append(cost1/(m_tr*n))
-#          # testLoss.append(cost2/(m_te*n))
-#          # print(k, cost1/(m_tr*n), cost2/(m_te*n))
-#          print(k, cost1 / (m_tr * n))
-start_time = time.time()
-for k in range(400):  # 100 is the number of epoch
+for k in range(10):  # 100 is the number of epoch
     '''
     your codes here  (stochastic update of parameters)
                    '''
     cost1=0
     cost2=0
     for i in range(m_tr):
-        #의미 단위로 계산.(하나의 데이터에 대해서)
-        hypothesis = sigmoid(trImg[i,:]*theta)
-        grad = trImg[i,:]*(hypothesis-trLb[i])
-        theta = theta-alpha*grad
-        #train cost 계산
-        cost1 = cost1 + sum((sigmoid(trImg[i, :] * theta) - trLb[i]) ** 2)
-    # test cost 계산
-    for i in range(m_te):
-        cost2 = cost2 + sum((sigmoid(teImg[i, :] * theta) - teLb[i]) ** 2)
+        for j in range(n):
+            hypothesis = sigmoid(trImg[i,j]*theta[j])
+            grad = trImg[i,j]*(hypothesis-trLb[i])
+            theta = theta-alpha*grad
+            #train cost 계산
+            cost1 = cost1 + sum((sigmoid(trImg[i, :] * theta) - trLb[i]) ** 2)
+        # test cost 계산
+        # for i in range(m_te):
+        #     cost2 = cost2 + sum((sigmoid(teImg[i, :] * theta) - teLb[i]) ** 2)
 
-    if k % 5 == 0:
+    if k % 1 == 0:
          trainLoss.append(cost1/(m_tr*n))
-         testLoss.append(cost2/(m_te*n))
-         print(k, cost1/(m_tr*n), cost2/(m_te*n))
-print("소요시간 : %s sec" % (time.time() - start_time))
+         # testLoss.append(cost2/(m_te*n))
+         # print(k, cost1/(m_tr*n), cost2/(m_te*n))
+         print(k, cost1 / (m_tr * n))
+# for k in range(400):  # 100 is the number of epoch
+#     '''
+#     your codes here  (stochastic update of parameters)
+#                    '''
+#     cost1=0
+#     cost2=0
+#     for i in range(m_tr):
+#         #의미 단위로 계산.(하나의 데이터에 대해서)
+#         hypothesis = sigmoid(trImg[i,:]*theta)
+#         grad = trImg[i,:]*(hypothesis-trLb[i])
+#         theta = theta-alpha*grad
+#         #train cost 계산
+#         cost1 = cost1 + sum((sigmoid(trImg[i, :] * theta) - trLb[i]) ** 2)
+#     # test cost 계산
+#     for i in range(m_te):
+#         cost2 = cost2 + sum((sigmoid(teImg[i, :] * theta) - teLb[i]) ** 2)
+#
+#     if k % 5 == 0:
+#          trainLoss.append(cost1/(m_tr*n))
+#          testLoss.append(cost2/(m_te*n))
+#          print(k, cost1/(m_tr*n), cost2/(m_te*n))
 plt.plot(trainLoss, label='Train loss')
 plt.plot(testLoss, label='Test loss')
 plt.legend(loc='upper right')

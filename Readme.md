@@ -45,8 +45,94 @@ sum of b :  30
 2) Batch(Vectorized) gradient update implementation (without for loops)
 
 ---
-**Source Code**
+#### **Source Code**  
+**1. SGD**    
+for문을 돌면서 웨이트를 업데이트함. batch와 달리 매번 업데이트를 수행함.
+```python
+for k in range(2000):
+    for i in range(m):
+        # "Your Code Here"
+        xi = Train_X[:,i]
+        sum_x = 0
+        grad = 0
+        for j in range(14):
+            sum_x = sum_x + xi[j]*theta[j]
+            grad = grad+(sum_x-Train_Y[i])*xi[j]
+            theta[j] = theta[j]-alpha*grad
+    cost_train = 0  # initial cost for each epoch
+    for i in range(m):
+        # "Your Code Here"
+        cost_train = cost_train + (sum_x - Train_Y[i])*(sum_x - Train_Y[i])
+    #MSE로 표현
+    cost_train = cost_train/m
+    cost_test = 0
+    for i in range(m_test):
+        # "Your Code Here"
+        xi = Test_X[:,i]
+        sum_x = 0
+        for j in range(14):
+            sum_x = sum_x + xi[j]*theta[j]
+            cost_test = cost_test + (sum_x - Test_Y[i]) * (sum_x - Test_Y[i])
+    #MSE로 표현
+    cost_test = cost_test/m_test
+```
+**2. BGD**  
+numpy를 활용하여 웨이트를 batch 단위로 업데이트함. 여기서는 mini batch가 아닌 full batch를 사용함.
 
+```python
+for k in range(2000):
+    grad = 0
+    grad = grad + np.dot(Train_X, (np.dot(theta, Train_X) - Train_Y))
+    theta = theta - alpha * grad
+    cost_train = 0  # initial cost for each epoch
+    # MSE로 표현
+    cost_train = np.mean((np.dot(theta, Train_X) - Train_Y) * (np.dot(theta, Train_X) - Train_Y))
+    cost_test = 0
+    #MSE로 표현
+    cost_test = np.mean((np.dot(theta, Test_X) - Test_Y) * (np.dot(theta, Test_X) - Test_Y))
+```
+---
+**3. Result**  
+* SGD 결과  
+  * Loss 곡선  
+![Figure_0](https://user-images.githubusercontent.com/38720524/55375153-03b86a80-5546-11e9-8ed4-fe6e0930ac26.png)
+
+  * Regression 결과(Test)  
+![Figure_1](https://user-images.githubusercontent.com/38720524/55375178-34989f80-5546-11e9-8d48-bb18ad51ed1d.png)
+
+  * Regression 결과(Training)  
+![Figure_2](https://user-images.githubusercontent.com/38720524/55375201-509c4100-5546-11e9-974d-17ca6f7d8360.png)
+
+* BGD 결과  
+  * Loss 곡선  
+![Figure_0](https://user-images.githubusercontent.com/38720524/55375239-6c9fe280-5546-11e9-8a9a-483cf66bef70.png)
+
+  * Regression 결과(Test)  
+![Figure_1](https://user-images.githubusercontent.com/38720524/55375240-6c9fe280-5546-11e9-8f24-4e575059b23a.png)
+
+  * Regression 결과(Training)   
+![Figure_2](https://user-images.githubusercontent.com/38720524/55375241-6d387900-5546-11e9-8340-ab88ddbc9da7.png)
+
+* BGD 결과  
+  * 실험한 PC 환경은 i5-6600 CPU @ 3.30GHz, Ram 8.00GB이며, 두 코드 간의 소요시간을 비교하면 아래와 같다. 소요시간 차이는 약 48.311배가 발생하며, 이는 for문과 벡터 연산에서 발생하는 속도 차이다.
+  * 관련 코드는 time 모듈을 이용하여 구현하였다.      
+|SGD|BGD|
+|:--------:|:-------:|
+|18.020 sec|0.373 sec|
+
+## Homework 2
+### MNIST Logistic classification(0 or 1) 
+- Hand written image data(28x28)
+- Classification of 0 and 1
+- Logistic Regression algorithm
+
+1) Stochastic gradient update implementation (using for loops)
+2) Batch(Vectorized) gradient update implementation (without for loops)
+
+**[주의사항]**  
+for 루프를 이용한 구현에서는 총 두 가지 방법으로 구현되었다. 화소 하나 당 weight를 업데이트 하는 방법과 그림 하나 당(28x28) weight를 업데이트 하는 방법으로 구현되었다.
 
 ---
-**Result**
+#### **Source Code**  
+**1. SGD - 화소 단위**    
+for문을 돌면서 웨이트를 업데이트함. batch와 달리 매번 업데이트를 수행함.
